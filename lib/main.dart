@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:quizzler/question.dart';
 
 void main() {
   runApp(Quizzler());
@@ -29,6 +30,24 @@ class QuizPage extends StatefulWidget {
 }
 
 class _QuizPageState extends State<QuizPage> {
+  List<Icon> scoreKeeper = [];
+
+  List<String> questions = [
+    'You can lead a cow down stairs but not up stairs.',
+    'Approximately one quarter of human bones are in the feet.',
+    'A slug\'s blood is green.'
+  ];
+
+  List<bool> answers = [
+    false,
+    true,
+    true,
+  ];
+
+  Question question = new Question(q: )
+
+  int questionNumber = 0;
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -41,7 +60,8 @@ class _QuizPageState extends State<QuizPage> {
             padding: EdgeInsets.all(10),
             child: Center(
               child: Text(
-                'This is where the question text will go.',
+                // 'This is where the question text will go.',
+                questions[questionNumber],
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   fontSize: 25,
@@ -66,6 +86,22 @@ class _QuizPageState extends State<QuizPage> {
               ),
               onPressed: () {
                 // TODO The user picked true.
+                bool correctAnswer = answers[questionNumber];
+
+                if (correctAnswer) {
+                  print('user got it right!');
+                } else {
+                  print('user got it wrong!');
+                }
+                setState(() {
+                  questionNumber++;
+                  scoreKeeper.add(
+                    Icon(
+                      Icons.check,
+                      color: Colors.green,
+                    ),
+                  );
+                });
               },
             ),
           ),
@@ -84,9 +120,29 @@ class _QuizPageState extends State<QuizPage> {
               ),
               onPressed: () {
                 // TODO The user picked false.
+                bool correctAnswer = answers[questionNumber];
+
+                if (!correctAnswer) {
+                  print('user got it right!');
+                } else {
+                  print('user got it wrong!');
+                }
+
+                setState(() {
+                  questionNumber++;
+                  scoreKeeper.add(
+                    Icon(
+                      Icons.close,
+                      color: Colors.red,
+                    ),
+                  );
+                });
               },
             ),
           ),
+        ),
+        Row(
+          children: scoreKeeper,
         ),
       ],
     );
@@ -94,7 +150,5 @@ class _QuizPageState extends State<QuizPage> {
 }
 
 /*
-question1: 'You can lead a cow down stairs but not up stairs.' false,
-question2: 'Approximately one quarter of human bones are in the feet.', true,
-question3: 'A slug\'s blood is green.\, true,
+
  */
